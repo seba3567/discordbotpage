@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LatamCommunityBOT - Discord Bot</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #1a472a;
+            --secondary-green: #2d5a40;
+            --accent-green: #4CAF50;
+            --highlight-green: #66BB6A;
+            --bg-dark: #0a0c0f;
+            --bg-card: #151820;
+            --text-light: #e0e0e0;
+            --text-gray: #9e9e9e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1f2c 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        nav {
+            background: rgba(26, 71, 42, 0.9);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--highlight-green);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(rgba(10, 12, 15, 0.8), rgba(10, 12, 15, 0.8)),
+                        url('/api/placeholder/1920/1080') center/cover;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-gray);
+            animation: fadeInUp 1s ease 0.2s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .features {
+            padding: 5rem 2rem;
+            background: var(--bg-card);
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .feature-card {
+            background: rgba(45, 90, 64, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 1px solid var(--secondary-green);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-green);
+        }
+
+        .commands {
+            padding: 5rem 2rem;
+        }
+
+        .commands-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .command-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .command-table th,
+        .command-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--secondary-green);
+        }
+
+        .command-table th {
+            background: var(--primary-green);
+            color: var(--text-light);
+        }
+
+        .command-table tr:hover {
+            background: rgba(45, 90, 64, 0.1);
+        }
+
+        .cta {
+            padding: 5rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+        }
+
+        .button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--accent-green);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            background: var(--bg-dark);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-green);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .command-table {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <span>🤖</span> LatamCommunityBOT
+            </a>
+            <div class="nav-links">
+                <a href="#features">Características</a>
+                <a href="#commands">Comandos</a>
+                <a href="#about">Acerca de</a>
+                <a href="#support">Soporte</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>LatamCommunityBOT</h1>
+            <p>El bot de para LatamServices</p>
+            <a href="#" class="button">Añadir al Servidor (privado) ⚡</a>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Moderación Avanzada</h3>
+                <p>Sistema completo de moderación para mantener tu servidor seguro</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎮</div>
+                <h3>Comandos Personalizados</h3>
+                <p>Crea y personaliza comandos específicos para tu comunidad</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎵</div>
+                <h3>Sistema de Música</h3>
+                <p>Reproduce música de alta calidad en tus canales de voz</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Estadísticas</h3>
+                <p>Seguimiento detallado de la actividad del servidor</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎉</div>
+                <h3>Eventos y Sorteos</h3>
+                <p>Organiza eventos y sorteos automáticos</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚙️</div>
+                <h3>Automatización</h3>
+                <p>Automatiza tareas y mensajes de bienvenida</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="commands" class="commands">
+        <div class="commands-container">
+            <h2>📝 Comandos Principales</h2>
+            <table class="command-table">
+                <thead>
+                    <tr>
+                        <th>Comando</th>
+                        <th>Descripción</th>
+                        <th>Uso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>/help</td>
+                        <td>Muestra todos los comandos disponibles</td>
+                        <td>/help [comando]</td>
+                    </tr>
+                    <tr>
+                        <td>/mod</td>
+                        <td>Comandos de moderación</td>
+                        <td>/mod [acción] [@usuario]</td>
+                    </tr>
+                    <tr>
+                        <td>/music</td>
+                        <td>Control de música</td>
+                        <td>/music play [canción]</td>
+                    </tr>
+                    <tr>
+                        <td>/config</td>
+                        <td>Configuración del servidor</td>
+                        <td>/config [opción]</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="cta">
+        <h2>? 🚀</h2>
+        <p>LatamCommunityBOT</p>
+        <a href="#" class="button">Comenzar Ahora 🎉</a>
+    </section>
+
+    <footer>
+        <p>© 2024 LatamCommunityBOT - Creado por @seba3567</p>
+        <div class="social-links">
+            <a href="https://github.com/seba3567" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-discord"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const navHeight = document.querySelector('nav').offsetHeight;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(26, 71, 42, 0.95)';
+            } else {
+                nav.style.background = 'rgba(26, 71, 42, 0.9)';
+            }
+        });
+    </script>
+</body>
+</html>
