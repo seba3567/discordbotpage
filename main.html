@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LatamCommunityBOT - Discord Bot</title>
+    <title>LatamCommunityBOT - Bot Privado de Discord</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -16,6 +16,8 @@
             --bg-card: #151820;
             --text-light: #e0e0e0;
             --text-gray: #9e9e9e;
+            --warning-red: #ff4444;
+            --warning-yellow: #ffd700;
         }
 
         * {
@@ -33,12 +35,12 @@
         }
 
         nav {
-            background: rgba(26, 71, 42, 0.9);
+            background: rgba(26, 71, 42, 0.95);
             backdrop-filter: blur(10px);
             position: fixed;
             width: 100%;
             z-index: 1000;
-            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         .nav-container {
@@ -47,7 +49,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 2rem;
+            padding: 1rem 2rem;
         }
 
         .nav-logo {
@@ -70,9 +72,12 @@
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
         }
 
         .nav-links a:hover {
+            background: rgba(255,255,255,0.1);
             color: var(--highlight-green);
         }
 
@@ -83,122 +88,192 @@
             justify-content: center;
             text-align: center;
             padding: 2rem;
-            background: linear-gradient(rgba(10, 12, 15, 0.8), rgba(10, 12, 15, 0.8)),
-                        url('/api/placeholder/1920/1080') center/cover;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(rgba(10, 12, 15, 0.9), rgba(10, 12, 15, 0.9));
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, var(--secondary-green) 0%, transparent 70%);
+            opacity: 0.1;
+            z-index: 1;
         }
 
         .hero-content {
+            position: relative;
+            z-index: 2;
             max-width: 800px;
         }
 
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--text-light), var(--highlight-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             animation: fadeInUp 1s ease;
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            color: var(--text-gray);
-            animation: fadeInUp 1s ease 0.2s;
-            opacity: 0;
-            animation-fill-mode: forwards;
+        .private-badge {
+            background: var(--warning-red);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            animation: pulse 2s infinite;
         }
 
-        .features {
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: var(--accent-green);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+        }
+
+        .terms-section {
             padding: 5rem 2rem;
             background: var(--bg-card);
         }
 
-        .features-grid {
+        .terms-grid {
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            padding: 2rem 0;
         }
 
-        .feature-card {
-            background: rgba(45, 90, 64, 0.2);
+        .terms-card {
+            background: rgba(45, 90, 64, 0.1);
             border-radius: 12px;
             padding: 2rem;
-            text-align: center;
-            transition: transform 0.3s;
             border: 1px solid var(--secondary-green);
+            transition: transform 0.3s ease;
         }
 
-        .feature-card:hover {
-            transform: translateY(-10px);
+        .terms-card:hover {
+            transform: translateY(-5px);
         }
 
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+        .terms-card h3 {
             color: var(--accent-green);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .commands {
+        .warning-text {
+            color: var(--warning-red);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 1rem 0;
+        }
+
+        .command-section {
             padding: 5rem 2rem;
         }
 
-        .commands-container {
+        .command-container {
             max-width: 1200px;
             margin: 0 auto;
+        }
+
+        .command-group {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--secondary-green);
+        }
+
+        .command-group h3 {
+            color: var(--accent-green);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .command-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 2rem;
-            background: var(--bg-card);
-            border-radius: 12px;
-            overflow: hidden;
         }
 
-        .command-table th,
         .command-table td {
             padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--secondary-green);
+            border-bottom: 1px solid rgba(76, 175, 80, 0.2);
         }
 
-        .command-table th {
-            background: var(--primary-green);
-            color: var(--text-light);
+        .command-table tr:last-child td {
+            border-bottom: none;
         }
 
-        .command-table tr:hover {
-            background: rgba(45, 90, 64, 0.1);
+        .command-name {
+            color: var(--accent-green);
+            font-family: monospace;
+            font-size: 1.1rem;
         }
 
-        .cta {
+        .economy-section {
             padding: 5rem 2rem;
+            background: var(--bg-card);
+        }
+
+        .economy-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .economy-card {
+            background: rgba(45, 90, 64, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
             text-align: center;
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+            border: 1px solid var(--secondary-green);
+            transition: transform 0.3s ease;
         }
 
-        .button {
-            display: inline-block;
-            padding: 1rem 2rem;
-            background: var(--accent-green);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: transform 0.3s, box-shadow 0.3s;
+        .economy-card:hover {
+            transform: translateY(-5px);
         }
 
-        .button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        .economy-icon {
+            font-size: 2.5rem;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
         }
 
         footer {
             background: var(--bg-dark);
             padding: 3rem 2rem;
             text-align: center;
+            border-top: 1px solid var(--secondary-green);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .social-links {
@@ -211,11 +286,12 @@
         .social-links a {
             color: var(--text-light);
             font-size: 1.5rem;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
         }
 
         .social-links a:hover {
             color: var(--accent-green);
+            transform: translateY(-2px);
         }
 
         @keyframes fadeInUp {
@@ -229,6 +305,12 @@
             }
         }
 
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -238,7 +320,11 @@
                 font-size: 2.5rem;
             }
 
-            .features-grid {
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .terms-grid, .economy-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -255,135 +341,114 @@
                 <span>🤖</span> LatamCommunityBOT
             </a>
             <div class="nav-links">
-                <a href="#features">Características</a>
+                <a href="#terms">Terms & Privacy</a>
                 <a href="#commands">Comandos</a>
-                <a href="#about">Acerca de</a>
-                <a href="#support">Soporte</a>
+                <a href="#economy">Economía Global</a>
             </div>
         </div>
     </nav>
 
     <section class="hero">
         <div class="hero-content">
-            <h1>LatamCommunityBOT</h1>
-            <p>El bot de para LatamServices</p>
-            <a href="#" class="button">Añadir al Servidor (privado) ⚡</a>
+            <h1>🌟 LatamCommunityBOT 🌟</h1>
+            <div class="private-badge">
+                <i class="fas fa-lock"></i> BOT PRIVADO
+            </div>
+            <p>Sistema avanzado de administración y economía global para servidores autorizados</p>
         </div>
     </section>
 
-    <section id="features" class="features">
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🛡️</div>
-                <h3>Moderación Avanzada</h3>
-                <p>Sistema completo de moderación para mantener tu servidor seguro</p>
+    <section id="terms" class="terms-section">
+        <h2 class="section-title">Términos y Privacidad</h2>
+        <div class="terms-grid">
+            <div class="terms-card">
+                <h3><i class="fas fa-scroll"></i> Terms of Service</h3>
+                <div class="warning-text">⚠️ Uso Exclusivamente Privado</div>
+                <ul>
+                    <li>❌ Prohibida la redistribución del bot</li>
+                    <li>❌ Prohibida la modificación del código</li>
+                    <li>❌ Prohibida la ingeniería inversa</li>
+                    <li>❌ Prohibido el acceso no autorizado</li>
+                    <li>✅ Uso exclusivo en servidores autorizados</li>
+                    <li>✅ Administración centralizada</li>
+                </ul>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎮</div>
-                <h3>Comandos Personalizados</h3>
-                <p>Crea y personaliza comandos específicos para tu comunidad</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎵</div>
-                <h3>Sistema de Música</h3>
-                <p>Reproduce música de alta calidad en tus canales de voz</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📊</div>
-                <h3>Estadísticas</h3>
-                <p>Seguimiento detallado de la actividad del servidor</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎉</div>
-                <h3>Eventos y Sorteos</h3>
-                <p>Organiza eventos y sorteos automáticos</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">⚙️</div>
-                <h3>Automatización</h3>
-                <p>Automatiza tareas y mensajes de bienvenida</p>
+            <div class="terms-card">
+                <h3><i class="fas fa-shield-alt"></i> Privacy Policy</h3>
+                <ul>
+                    <li>🔐 Encriptación de datos end-to-end</li>
+                    <li>🔒 Información privada por servidor</li>
+                    <li>📊 Estadísticas confidenciales</li>
+                    <li>🤝 No compartimos datos con terceros</li>
+                    <li>⚡ Cumplimiento con ToS de Discord</li>
+                    <li>✅ Backups seguros regulares</li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <section id="commands" class="commands">
-        <div class="commands-container">
-            <h2>📝 Comandos Principales</h2>
-            <table class="command-table">
-                <thead>
+    <section id="commands" class="command-section">
+        <h2 class="section-title">Sistema de Comandos</h2>
+        <div class="command-container">
+            <div class="command-group">
+                <h3><i class="fas fa-crown"></i> Comandos Administrativos</h3>
+                <table class="command-table">
                     <tr>
-                        <th>Comando</th>
-                        <th>Descripción</th>
-                        <th>Uso</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>/help</td>
-                        <td>Muestra todos los comandos disponibles</td>
-                        <td>/help [comando]</td>
+                        <td class="command-name">/admin config</td>
+                        <td>Configuración general del servidor</td>
                     </tr>
                     <tr>
-                        <td>/mod</td>
-                        <td>Comandos de moderación</td>
-                        <td>/mod [acción] [@usuario]</td>
+                        <td class="command-name">/admin mod</td>
+                        <td>Sistema de moderación avanzada</td>
                     </tr>
                     <tr>
-                        <td>/music</td>
-                        <td>Control de música</td>
-                        <td>/music play [canción]</td>
+                        <td class="command-name">/admin economy</td>
+                        <td>Control de economía global</td>
                     </tr>
                     <tr>
-                        <td>/config</td>
-                        <td>Configuración del servidor</td>
-                        <td>/config [opción]</td>
+                        <td class="command-name">/admin logs</td>
+                        <td>Registro de actividades</td>
                     </tr>
-                </tbody>
-            </table>
+                </table>
+            </div>
+
+            <div class="command-group">
+                <h3><i class="fas fa-users"></i> Comandos de Usuario</h3>
+                <table class="command-table">
+                    <tr>
+                        <td class="command-name">/balance</td>
+                        <td>Consultar balance global</td>
+                    </tr>
+                    <tr>
+                        <td class="command-name">/transfer</td>
+                        <td>Transferencias entre servidores</td>
+                    </tr>
+                    <tr>
+                        <td class="command-name">/shop</td>
+                        <td>Acceso a tienda global</td>
+                    </tr>
+                    <tr>
+                        <td class="command-name">/inventory</td>
+                        <td>Inventario personal</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </section>
 
-    <section class="cta">
-        <h2>? 🚀</h2>
-        <p>LatamCommunityBOT</p>
-        <a href="#" class="button">Comenzar Ahora 🎉</a>
-    </section>
-
-    <footer>
-        <p>© 2024 LatamCommunityBOT - Creado por @seba3567</p>
-        <div class="social-links">
-            <a href="https://github.com/seba3567" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="#" target="_blank"><i class="fab fa-discord"></i></a>
-            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-        </div>
-    </footer>
-
-    <script>
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const navHeight = document.querySelector('nav').offsetHeight;
-                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.style.background = 'rgba(26, 71, 42, 0.95)';
-            } else {
-                nav.style.background = 'rgba(26, 71, 42, 0.9)';
-            }
-        });
-    </script>
-</body>
-</html>
+    <section id="economy" class="economy-section">
+        <h2 class="section-title">Economía Global</h2>
+        <p class="section-subtitle">Sistema económico interconectado entre servidores autorizados</p>
+        <div class="economy-grid">
+            <div class="economy-card">
+                <div class="economy-icon">💰</div>
+                <h3>Sistema Monetario</h3>
+                <p>Moneda unificada entre servidores con control de inflación</p>
+            </div>
+            <div class="economy-card">
+                <div class="economy-icon">🔄</div>
+                <h3>Transferencias Seguras</h3>
+                <p>Movimientos verificados entre comunidades autorizadas</p>
+            </div>
+            <div class="economy-card">
+                <div class="economy-icon">
